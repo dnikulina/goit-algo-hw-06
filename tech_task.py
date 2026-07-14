@@ -37,12 +37,11 @@ class Record:
                 break    
     
     def edit_phone(self, old_phone, new_phone):
-            validated_phone = Phone(new_phone)
-            for phone in self.phones:
-                if phone.value == old_phone:
-                    phone.value = validated_phone.value
-                return
-            raise ValueError
+            phone = self.find_phone(old_phone)
+            if phone is None:
+                raise ValueError
+            self.remove_phone(old_phone)
+            self.add_phone(new_phone)
      
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
@@ -77,6 +76,8 @@ book.add_record(john_record)
     
 jane_record = Record("Jane")
 jane_record.add_phone("9876543210")
+
+
 book.add_record(jane_record)
 
 print(book)
