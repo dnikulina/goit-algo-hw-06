@@ -31,17 +31,19 @@ class Record:
         return None
 
     def remove_phone(self, phone_to_remove):
-        for phone in self.phones:
-            if phone.value == phone_to_remove:
-                self.phones.remove(phone)
-                break    
+        phone = self.find_phone(phone_to_remove)
+        if phone is None:
+             return
+        self.phones.remove(phone)    
     
     def edit_phone(self, old_phone, new_phone):
             phone = self.find_phone(old_phone)
             if phone is None:
                 raise ValueError
-            self.remove_phone(old_phone)
+            Phone(new_phone)
             self.add_phone(new_phone)
+            self.remove_phone(old_phone)
+            
      
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
